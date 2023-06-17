@@ -1,0 +1,26 @@
+## SPARQL query to select a table of the data catalogue content
+
+PREFIX t:     <https://schema.coypu.org/metadata-template#>
+PREFIX dcat:  <http://www.w3.org/ns/dcat#>
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?Dataset 
+  (GROUP_CONCAT(DISTINCT ?Type_ ; separator=" / ") AS ?Type)
+  (GROUP_CONCAT(DISTINCT ?Data_URL_ ; separator=" / ") AS ?Data_URL)
+  (GROUP_CONCAT(DISTINCT ?License_Note_ ; separator=" / ") AS ?License_Note)
+  (GROUP_CONCAT(DISTINCT ?License_Page_ ; separator=" / ") AS ?License_Page)
+  (GROUP_CONCAT(DISTINCT ?License_RDF_URL_ ; separator=" / ") AS ?License_RDF_URL)
+WHERE {
+	?s a t:Dataset ;
+		dct:identifier ?Dataset_ ;
+	bind(concat("[", ucase(?Dataset_), "](", str(?s), ")") AS ?Dataset) .
+	OPTIONAL { ?s t:type ?Type_ } .
+	OPTIONAL { ?s dcat:landingPage ?Data_URL_ } .
+	OPTIONAL { ?s t:licenseNote ?License_Note_ } .
+	OPTIONAL { ?s t:licensePage ?License_Page_ } .
+	OPTIONAL { ?s dct:license ?License_RDF_URL_ } .
+}
+GROUP BY ?Dataset
+ORDER BY ?Dataset

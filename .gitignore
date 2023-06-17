@@ -1,0 +1,14 @@
+[#]*[#]
+*~
+ontology_docs/*
+!ontology_docs/.gitkeep
+.[#]*
+tarql-demo/data.ttl
+part-*/
+geojson-demo/geoBoundariesCGAZ_ADM0.geojson
+geojson-demo/geoBoundariesCGAZ_ADM0.jsonl
+geojson-demo/boundaries_adm0.ttl
+fuseki-volume/tdb2/
+fuseki-volume/derby.log
+.env
+_ontologies_for_reasoner.ttl

@@ -1,0 +1,103 @@
+## The configuration of the Example queries and prefixes in the
+## Fuseki UI Yasgui
+
+@prefix :     <https://yasgui.triply.cc/config#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sd:   <http://www.w3.org/ns/sparql-service-description#> .
+
+[ sd:endpoint  "/yasgui-config/" ;
+  :prefixes    ( [ rdfs:label  "conf" ;
+                   :uri        :
+                 ]
+                 [ rdfs:label  "rdfs" ;
+                   :uri        rdfs:
+                 ]
+                 [ rdfs:label  "rdf" ;
+                   :uri        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                 ]
+                 [ rdfs:label  "sd" ;
+                   :uri        sd:
+                 ]
+                 [ rdfs:label  "list" ;
+                   :uri        <http://jena.apache.org/ARQ/list#>
+                 ]
+               )
+] .
+
+[ sd:endpoint      "/geods/" ;
+  :exampleQueries  ( [ rdfs:label  "spo10" ;
+                       :query      "SELECT * { ?s ?p ?o } LIMIT 10"
+                     ]
+                     [ rdfs:label  "gp-counts (cached)" ;
+                       :query      """SELECT ?g ?p ?c WHERE {
+   { SERVICE <cache:> { SELECT ("defaultGraph" AS ?g) ?p (COUNT(*) AS ?c) { ?s ?p ?o } GROUP BY ?p } } UNION
+   { SERVICE <cache:> { SELECT ?g ?p (COUNT(*) AS ?c) { GRAPH ?g { ?s ?p ?o } } GROUP BY ?g ?p } }
+}
+ORDER BY DESC(?c)"""
+                     ]
+                     [ rdfs:label  "ontology classes" ;
+                       :query      """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT * {
+  ?class a owl:Class .
+  OPTIONAL {
+    ?class rdfs:subClassOf ?superClass 
+  } 
+}"""
+                     ]
+                     [ rdfs:label  "Geo search" ;
+                       :query      """PREFIX units: <http://www.opengis.net/def/uom/OGC/1.0/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX spatial: <http://jena.apache.org/spatial#>
+
+select ?geom {
+  values ?myPoint {
+    "Point(4.895168 52.370216)"^^geo:wktLiteral
+  }
+  ?geom geo:sfContains ?myPoint .
+}"""
+                     ]
+                   ) ;
+  :prefixes        ( [ rdfs:label  "owl" ;
+                       :uri        <http://www.w3.org/2002/07/owl#>
+                     ]
+                     [ rdfs:label  "coy" ;
+                       :uri        <https://schema.coypu.org/global#>
+                     ]
+                     [ rdfs:label  "rdfs" ;
+                       :uri        rdfs:
+                     ]
+                     [ rdfs:label  "rdf" ;
+                       :uri        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                     ]
+                     [ rdfs:label  "geo" ;
+                       :uri        <http://www.opengis.net/ont/geosparql#>
+                     ]
+                     [ rdfs:label  "geof" ;
+                       :uri        <http://www.opengis.net/def/function/geosparql/>
+                     ]
+                     [ rdfs:label  "spatial" ;
+                       :uri        <http://jena.apache.org/spatial#>
+                     ]
+                     [ rdfs:label  "spatialF" ;
+                       :uri        <http://jena.apache.org/function/spatial#>
+                     ]
+                     [ rdfs:label  "units" ;
+                       :uri        <http://www.opengis.net/def/uom/OGC/1.0/>
+                     ]
+                     [ rdfs:label  "url" ;
+                       :uri        <http://jsa.aksw.org/fn/url/>
+                     ]
+                     [ rdfs:label  "json" ;
+                       :uri        <http://jsa.aksw.org/fn/json/>
+                     ]
+                     [ rdfs:label  "xsd" ;
+                       :uri        <http://www.w3.org/2001/XMLSchema#>
+                     ]
+                     [ rdfs:label  "p" ;
+                       :uri        <http://example.org/schema#>
+                     ]
+                   )
+] .

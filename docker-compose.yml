@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+  fuseki:
+    image: aksw/fuseki-coypu
+    init: true
+    user: ${UID}:${GID}
+    volumes:
+      - ./:/data
+    # The Fuseki base area is stored in this folder
+    working_dir: /data/fuseki-volume
+    ports:
+      - 3030:3030
+
+  onto-docs:
+    image: lipanski/docker-static-website
+    init: true
+    user: ${UID}:${GID}
+    volumes:
+      - ./ontology_docs/:/home/static:ro
+    ports:
+      - 8000:8000
+    command: /busybox httpd -f -p 8000
+
+  ldv:
+    image: aksw/ldv
+    init: true
+    environment:
+      - ENDPOINT_URL=http://localhost:3030/geods
+      - EXPLORE_URL=http://localhost:8002/
+    ports:
+      - 8001:80
+
+  ontodia:
+    image: aksw/ontodia
+    init: true
+    environment:
+      - ENDPOINT_URL=http://localhost:3030/geods
+      - LUCENE_SEARCH=no
+    ports:
+      - 8002:80
+
+  demo-message:
+    image: aksw/kg-platform-demo-message
+    init: true
+    depends_on:
+      - fuseki
+      - onto-docs
+      - ldv
+      - ontodia

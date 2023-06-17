@@ -1,0 +1,62 @@
+##### Instantiate the data catalogue file #####
+
+PREFIX ds:    <https://metadata.coypu.org/dataset/>
+PREFIX dcat:  <http://www.w3.org/ns/dcat#>
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX t:     <https://schema.coypu.org/metadata-template#>
+
+
+##### Add type #####
+
+INSERT {
+  ?s a t:Dataset .
+}
+WHERE {
+  ?s ?p ?o .
+  filter(strstarts(str(?s), str(ds:))) .
+  filter not exists { ?s a ?t } .
+}
+
+;
+##### Add identifier #####
+
+INSERT {
+  ?s dct:identifier ?id .
+}
+WHERE {
+  ?s a t:Dataset .
+  filter not exists { ?s dct:identifier ?x } .
+  bind(replace(str(?s), "^.*[/]", "") as ?id) .
+}
+
+;
+##### Add backlinks #####
+
+INSERT {
+  ?g t:isReferencedFrom ?ds .
+}
+WHERE {
+  ?ds a t:Dataset ;
+    t:graph ?g .
+}
+
+;
+##### Add catalog #####
+
+INSERT {
+  <https://metadata.coypu.org/catalog>
+    dcat:record ?s .
+}
+WHERE {
+  ?s a t:Dataset .
+}
+
+;
+INSERT {
+  <https://metadata.coypu.org/catalog> a t:Catalog .
+} WHERE {}
+
+;
+##### Output #####

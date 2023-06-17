@@ -1,0 +1,40 @@
+@prefix :      <https://metadata.coypu.org/dataset/> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix t:     <https://schema.coypu.org/metadata-template#> .
+
+:ports
+    dct:license
+            <http://dalicc.net/licenselibrary/CreativeCommonsAttributionSharealike20Germany> ,
+            <http://dalicc.net/licenselibrary/OdcPublicDomainDedicationAndLicence> ;
+    dcat:landingPage
+            <https://data.humdata.org/dataset/global-ports> ,
+            <https://www.arcgis.com/home/item.html?id=b04b76b94059436e93757c301c10026c> ;
+    t:graph                 <https://data.coypu.org/infrastructure/ports/> ;
+    t:licenseNote           "CC-BY-SA by World Food Programe/ Public Domain" ;
+    t:licensePage
+            <https://data.humdata.org/dataset/global-ports> ,
+            <https://www.arcgis.com/home/item.html?id=b04b76b94059436e93757c301c10026c> ;
+    t:theme                 "Global sea ports" ;
+    t:type                  "Dump"
+.
+
+:geoboundaries
+    dcat:landingPage        <https://www.geoboundaries.org/> ;
+    t:graph                 <https://data.coypu.org/administrative-regions/> ;
+    t:licenseNote           "Citation 'Runfola, D. et al. (2020) geoBoundaries: A global database of political administrative boundaries. PLoS ONE 15(4): e0231866. https://doi.org/10.1371/journal.pone.0231866'" ;
+    t:licensePage           <https://www.geoboundaries.org/index.html#citation> ;
+    t:theme                 "Administrative boundaries of level 0 from Geoboundaries" ;
+    t:type                  "Dump"
+.
+
+:ontology
+    dct:license             <http://dalicc.net/licenselibrary/CC-BY_v4> ;
+    dcat:landingPage        <https://schema.coypu.org/> ;
+    t:graph                  <https://schema.coypu.org/world-port-index/> ;
+    t:licenseNote           "CC-BY-4.0 by CoyPu Project" ;
+    t:theme                 "Schema" ;
+    t:type                  "Ontology"
+.

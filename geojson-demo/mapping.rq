@@ -1,0 +1,32 @@
+PREFIX norse: <https://w3id.org/aksw/norse#>
+PREFIX rml: <http://semweb.mmlab.be/ns/rml#>
+PREFIX ql: <http://semweb.mmlab.be/ns/ql#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX spatialF: <http://jena.apache.org/function/spatial#>
+PREFIX : <http://example.org/country/>
+PREFIX geom: <http://example.org/geometry/country/>
+PREFIX p: <http://example.org/schema#>
+
+CONSTRUCT {
+  ?country p:iso3Code ?iso3 ;
+           geo:hasGeometry ?geometryNode .
+
+  ?geometryNode a geo:Geometry ;
+                geo:asWKT ?geometry .
+}
+WHERE {
+  SERVICE norse:rml.source
+      { norse:rml.source
+           rml:iterator     "$.features[*]" ;
+           a                rml:LogicalSource ;
+           rml:referenceFormulation  ql:JSONPath ;
+           rml:source       "geoBoundariesCGAZ_ADM0.geojson" ;
+           norse:rml.output ?feature . }
+  BIND(norse:json.path(?feature, "$.properties.shapeGroup") AS ?iso3) .
+  FILTER(BOUND(?iso3)) .
+  BIND(norse:json.path(?feature, "$.geometry") AS ?geometry_) .
+  BIND(spatialF:transformDatatype(STRDT(str(?geometry_), geo:geoJSONLiteral), geo:wktLiteral) AS ?geometry) .
+
+  BIND(iri(concat(str(:), ?iso3)) AS ?country) .
+  BIND(iri(concat(str(geom:), ?iso3)) AS ?geometryNode) .
+}

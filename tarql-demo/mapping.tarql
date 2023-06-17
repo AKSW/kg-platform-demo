@@ -1,0 +1,27 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX coy: <https://schema.coypu.org/global#>
+PREFIX acled: <https://schema.coypu.org/acled#>
+PREFIX data: <https://data.coypu.org/event/acled/>
+PREFIX js: <http://jena.apache.org/ARQ/jsFunction#>
+PREFIX json: <http://jsa.aksw.org/fn/json/>
+PREFIX spatialF: <http://jena.apache.org/function/spatial#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX : <http://example.org/person/>
+PREFIX p: <http://example.org/schema#>
+
+
+CONSTRUCT {
+  ?person p:dateOfBirth ?dob_xsd ;
+          foaf:name ?Name ;
+	  owl:sameAs ?wikidata_link .
+}
+WHERE {
+  BIND(iri(concat(str(:), js:toCamel(?Name)))   AS ?person) .
+  BIND(iri(replace(?Wikidata, "wd:", str(wd:))) AS ?wikidata_link) .
+  BIND(xsd:date(js:toIsoDateString(?Dob))       AS ?dob_xsd) .
+}

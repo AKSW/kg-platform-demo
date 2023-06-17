@@ -1,0 +1,69 @@
+PREFIX fuseki:    <http://jena.apache.org/fuseki#>
+PREFIX rdf:       <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:      <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl:       <http://www.w3.org/2002/07/owl#>
+PREFIX tdb1:      <http://jena.hpl.hp.com/2008/tdb#>
+PREFIX tdb2:      <http://jena.apache.org/2016/tdb#>
+PREFIX text:      <http://jena.apache.org/text#> 
+PREFIX ja:        <http://jena.hpl.hp.com/2005/11/Assembler#>
+PREFIX geosparql: <http://jena.apache.org/geosparql#>
+
+PREFIX fe:        <http://jena.apache.org/from-enhancer#>
+PREFIX se:        <http://jena.apache.org/service-enhancer#>
+PREFIX xdt:       <http://jsa.aksw.org/dt/sparql/>
+
+PREFIX jxp:       <http://jenax.aksw.org/plugin#>
+
+<#service> rdf:type fuseki:Service ;
+    fuseki:name "geods" ;
+    fuseki:endpoint [ fuseki:name "data" ; fuseki:operation fuseki:gsp-rw ; ] ;
+    fuseki:endpoint [ fuseki:operation fuseki:query ; ] ;
+    fuseki:endpoint [ fuseki:operation fuseki:update ; ] ;
+    fuseki:dataset <#reasoningServiceDS> .
+
+## Load the rdfs reasoning service
+<#reasoningServiceDS>
+    a jxp:DatasetRDFSEnabled ;
+    ## the RDFS schema is provided externally, the path to the RDF file
+    ## is given here
+    ja:rdfsSchema "../_ontologies_for_reasoner.ttl" ;
+    ja:dataset <#serviceEnhancerDS> ;
+.
+
+## Load the caching service
+<#serviceEnhancerDS> a se:DatasetServiceEnhancer ;
+    se:cacheMaxEntryCount 10000 ;
+    ja:baseDataset <#geosparqlDS> ;
+.
+
+<#geosparqlDS> rdf:type geosparql:GeosparqlDataset ;
+    ## If absent build an in-memory index each time.
+    geosparql:spatialIndexFile     "tdb2/geods/spatial.index";
+
+    ## Default settings. See documentation for meanings.
+    geosparql:inference            false ;
+    geosparql:queryRewrite         true ;
+    geosparql:indexEnabled         true ;
+    geosparql:applyDefaultGeometry false ;
+
+    # graph based index
+    ## set this to true when using named graphs
+    ## for selective recomputation
+    geosparql:spatialIndexPerGraph true ;
+   
+    # SRS URI
+    geosparql:srsUri "http://www.opengis.net/def/crs/EPSG/0/4326" ;
+
+    # 3 item lists: [Geometry Literal, Geometry Transform, Query Rewrite]
+    geosparql:indexSizes           "-1,-1,-1" ;       # Default - unlimited.
+    geosparql:indexExpires         "5000,5000,5000" ; # Default - time in milliseconds.
+
+    ## Required - data over which GeoSPARQL is applied.
+    geosparql:dataset <#baseDS> ;
+.
+
+## The main database file
+<#baseDS> rdf:type tdb2:DatasetTDB2 ;
+    tdb2:location "tdb2/geods/" ;
+    tdb2:unionDefaultGraph false ;
+.

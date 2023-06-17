@@ -1,0 +1,17 @@
+PREFIX fuseki:    <http://jena.apache.org/fuseki#>
+PREFIX rdf:       <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:      <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl:       <http://www.w3.org/2002/07/owl#>
+PREFIX ja:        <http://jena.hpl.hp.com/2005/11/Assembler#>
+
+<#service> rdf:type fuseki:Service ;
+    fuseki:name "yasgui-config" ;
+    fuseki:endpoint [ fuseki:name "data" ; fuseki:operation fuseki:gsp-rw ; ] ;
+    fuseki:endpoint [ fuseki:operation fuseki:query ; ] ;
+    fuseki:dataset <#yasguiConfigDS> .
+
+<#yasguiConfigDS> rdf:type ja:RDFDataset ;
+    ja:defaultGraph
+      [ a ja:MemoryModel ;
+        ja:content [ja:externalContent <file:../../yasgui-config.ttl> ] ;
+      ] ;

@@ -1,0 +1,753 @@
+@prefix : <https://schema.coypu.org/world-port-index#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix world-port-index: <https://schema.coypu.org/world-port-index#> .
+@base <https://schema.coypu.org/world-port-index> .
+
+<https://schema.coypu.org/world-port-index> rdf:type owl:Ontology ;
+                                             owl:versionIRI <https://schema.coypu.org/world-port-index/1.0> ;
+                                             <http://creativecommons.org/ns#license> "https://creativecommons.org/licenses/by/4.0/" ;
+                                             <http://purl.org/dc/terms/rights> "CC BY 4.0 - CoyPu Project" ;
+                                             <http://purl.org/vocab/vann/preferredNamespacePrefix> "world-port-index" ;
+                                             <http://purl.org/vocab/vann/preferredNamespaceUri> "https://schema.coypu.org/world-port-index#" ;
+                                             rdfs:comment "An ontology for modelling ports, inspired by the World Port Index dataset."@en ;
+                                             rdfs:label "World Port Index Ontology"@en ;
+                                             owl:versionInfo 1.0 .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://creativecommons.org/ns#license
+<http://creativecommons.org/ns#license> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/rights
+<http://purl.org/dc/terms/rights> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespacePrefix
+<http://purl.org/vocab/vann/preferredNamespacePrefix> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespaceUri
+<http://purl.org/vocab/vann/preferredNamespaceUri> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://schema.coypu.org/world-port-index#hasDryDock
+world-port-index:hasDryDock rdf:type owl:ObjectProperty ,
+                                     owl:FunctionalProperty ;
+                            rdfs:range world-port-index:DryDockSizeClass ;
+                            rdfs:label "has dry dock size"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasPortSize
+world-port-index:hasPortSize rdf:type owl:ObjectProperty ,
+                                      owl:FunctionalProperty ;
+                             rdfs:range world-port-index:SizeClass ;
+                             rdfs:comment "The harbor size class as defined by the World Port Index dataset."@en ;
+                             rdfs:label "has harbor size"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasRailway
+world-port-index:hasRailway rdf:type owl:ObjectProperty ;
+                            rdfs:range world-port-index:MarineRailwaySizeClass ;
+                            rdfs:label "has marine railway size"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasRepairs
+world-port-index:hasRepairs rdf:type owl:ObjectProperty ,
+                                     owl:FunctionalProperty ;
+                            rdfs:range world-port-index:RepairClass ;
+                            rdfs:comment "Repairs that can be made to ocean-going vessels"@en ;
+                            rdfs:label "has repair possibilities"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasShelter
+world-port-index:hasShelter rdf:type owl:ObjectProperty ,
+                                     owl:FunctionalProperty ;
+                            rdfs:range world-port-index:ShelterClass ;
+                            rdfs:comment "The shelter afforded from wind, sea, and swell, refers to the area where normal port operations are conducted, usually the wharf area. Shelter afforded the anchorage area is given for ports where cargo is handled by lighters"@en ;
+                            rdfs:label "has sheltered afforded"@en .
+
+
+###  https://schema.coypu.org/world-port-index#isBetterThan
+world-port-index:isBetterThan rdf:type owl:ObjectProperty ;
+                              rdfs:label "is better than"@en .
+
+
+###  https://schema.coypu.org/world-port-index#isLargerThan
+world-port-index:isLargerThan rdf:type owl:ObjectProperty ;
+                              rdfs:label "is larger than"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://schema.coypu.org/world-port-index#hasAnchorageDepth
+world-port-index:hasAnchorageDepth rdf:type owl:DatatypeProperty ,
+                                            owl:FunctionalProperty ;
+                                   rdfs:range xsd:decimal ;
+                                   rdfs:comment "The depth in the anchorage in metres. The depth in the anchorage is the least depth in the best or principal anchorage. The depth listed reflects a general depth in the anchorage rather than an isolated shoal spot. A shoal which does not necessarily obstruct the anchorage is not considered for the least depth if the rest of the anchorage is safe and practicable."@en ;
+                                   rdfs:label "has anchorage depth"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasCargoDepth
+world-port-index:hasCargoDepth rdf:type owl:DatatypeProperty ,
+                                        owl:FunctionalProperty ;
+                               rdfs:range xsd:decimal ;
+                               rdfs:comment "The greatest cargo pier/wharf depth in metres. The greatest depth at chart datum alongside the respective wharf/pier is given. If there is more than one wharf/pier, then the one which has greatest usable depth is shown."@en ;
+                               rdfs:label "has cargo depth"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasChannelDepth
+world-port-index:hasChannelDepth rdf:type owl:DatatypeProperty ,
+                                          owl:FunctionalProperty ;
+                                 rdfs:range xsd:decimal ;
+                                 rdfs:comment "The controlling depth of the deepest channel in metres. The controlling depth of the principal or deepest channel at chart datum is given. The channel selected should lead up to the anchorage if within the harbor or to the wharf/pier. If the channel depth decreases from the anchorage to the wharf/pier and cargo can be worked at the anchorage, then the depth leading to the anchorage is taken. Large ports may have sub-ports (smaller) which have their own number and entry in the World Port Index. The controlling depth of the channel should refer to a smaller channel (if present) leading from the main channel into the sub-port facilities and anchorages."@en ;
+                                 rdfs:label "has channel depth"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasDepthMaximum
+world-port-index:hasDepthMaximum rdf:type owl:DatatypeProperty ,
+                                          owl:FunctionalProperty ;
+                                 rdfs:range xsd:decimal ;
+                                 rdfs:comment "The maximum depth in metres."@en ;
+                                 rdfs:label "has maximum depth"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasDepthMinimum
+world-port-index:hasDepthMinimum rdf:type owl:DatatypeProperty ,
+                                          owl:FunctionalProperty ;
+                                 rdfs:range xsd:decimal ;
+                                 rdfs:comment "The minimum depth in metres."@en ;
+                                 rdfs:label "has minimum depth"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasEntranceRestrictionIce
+world-port-index:hasEntranceRestrictionIce rdf:type owl:DatatypeProperty ,
+                                                    owl:FunctionalProperty ;
+                                           rdfs:domain <https://schema.coypu.org/global#Port> ;
+                                           rdfs:range xsd:boolean ;
+                                           rdfs:comment "A natural factor of ice restricting the entrance of vessels."@en ;
+                                           rdfs:label "has entrance restriction due to ice"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasEntranceRestrictionOther
+world-port-index:hasEntranceRestrictionOther rdf:type owl:DatatypeProperty ,
+                                                      owl:FunctionalProperty ;
+                                             rdfs:domain <https://schema.coypu.org/global#Port> ;
+                                             rdfs:range xsd:boolean ;
+                                             rdfs:comment "Other natural factors restricting the entrance of vessels."@en ;
+                                             rdfs:label "has other entrance restriction"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasEntranceRestrictionSwell
+world-port-index:hasEntranceRestrictionSwell rdf:type owl:DatatypeProperty ,
+                                                      owl:FunctionalProperty ;
+                                             rdfs:domain <https://schema.coypu.org/global#Port> ;
+                                             rdfs:range xsd:boolean ;
+                                             rdfs:comment "A natural factor of heavy swell restricting the entrance of vessels."@en ;
+                                             rdfs:label "has entrance restriction due to swell"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasEntranceRestrictionTide
+world-port-index:hasEntranceRestrictionTide rdf:type owl:DatatypeProperty ,
+                                                     owl:FunctionalProperty ;
+                                            rdfs:domain <https://schema.coypu.org/global#Port> ;
+                                            rdfs:range xsd:boolean ;
+                                            rdfs:comment "A natural factor of tide restricting the entrance of vessels."@en ;
+                                            rdfs:label "has entrance restriction due to tide"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasGoodHoldingGround
+world-port-index:hasGoodHoldingGround rdf:type owl:DatatypeProperty ,
+                                               owl:FunctionalProperty ;
+                                      rdfs:domain <https://schema.coypu.org/global#Port> ;
+                                      rdfs:range xsd:boolean ;
+                                      rdfs:comment "This is indicated only where actual anchorage conditions have been reported."@en ;
+                                      rdfs:label "has good holding ground"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasIndexNumber
+world-port-index:hasIndexNumber rdf:type owl:DatatypeProperty ,
+                                         owl:FunctionalProperty ;
+                                rdfs:range xsd:string ;
+                                rdfs:comment "An unique index assigned in the World Port Index dataset."@en ;
+                                rdfs:isDefinedBy <https://msi.nga.mil/Publications/WPI> ;
+                                rdfs:label "has index number"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasLengthMaximum
+world-port-index:hasLengthMaximum rdf:type owl:DatatypeProperty ,
+                                           owl:FunctionalProperty ;
+                                  rdfs:range xsd:decimal ;
+                                  rdfs:comment "The maximum length in metres."@en ;
+                                  rdfs:label "has maximum length"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasLengthMinimum
+world-port-index:hasLengthMinimum rdf:type owl:DatatypeProperty ,
+                                           owl:FunctionalProperty ;
+                                  rdfs:range xsd:decimal ;
+                                  rdfs:comment "The minimum length in metres."@en ;
+                                  rdfs:label "has minimum length"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasLngTerminalDepth
+world-port-index:hasLngTerminalDepth rdf:type owl:DatatypeProperty ,
+                                              owl:FunctionalProperty ;
+                                     rdfs:range xsd:decimal ;
+                                     rdfs:comment "The greatest depth of an LNG terminal in metres. The greatest depth at chart datum will be shown. Note: an oil terminal is a facility designed to conduct the loading and/or off-loading of crude oil or refined petroleum products. The terminal can be associated with a port or can be a stand alone facility. Generally, the terminal is offshore and is connected to the shore facilities by a pipeline. The offshore part may be an extended pier, SBM, buoy field, platform, or storage tanker. Many ports have piers and/or wharves that have facilities for refueling vessels. The oil terminal is distinguished by being specifically for oil transfer operations and nothing else (repairs alongside and cargo operations not permitted). LNG terminals are normally located away from other port operations and operate under and expanded set of safety regulations."@en ;
+                                     rdfs:label "has lng terminal depth"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasOilTerminalDepth
+world-port-index:hasOilTerminalDepth rdf:type owl:DatatypeProperty ,
+                                              owl:FunctionalProperty ;
+                                     rdfs:range xsd:decimal ;
+                                     rdfs:comment "The greatest depth of an Oil terminal in metres. The greatest depth at chart datum will be shown. Note: an oil terminal is a facility designed to conduct the loading and/or off-loading of crude oil or refined petroleum products. The terminal can be associated with a port or can be a stand alone facility. Generally, the terminal is offshore and is connected to the shore facilities by a pipeline. The offshore part may be an extended pier, SBM, buoy field, platform, or storage tanker. Many ports have piers and/or wharves that have facilities for refueling vessels. The oil terminal is distinguished by being specifically for oil transfer operations and nothing else (repairs alongside and cargo operations not permitted). LNG terminals are normally located away from other port operations and operate under and expanded set of safety regulations."@en ;
+                                     rdfs:label "has oil terminal depth"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasOverheadLimitations
+world-port-index:hasOverheadLimitations rdf:type owl:DatatypeProperty ,
+                                                 owl:FunctionalProperty ;
+                                        rdfs:domain <https://schema.coypu.org/global#Port> ;
+                                        rdfs:comment "This entry is shown only to indicate that bridge and overhead power cables exist. It is advisable to refer to the chart for particulars."@en ;
+                                        rdfs:label "has overhead limitations"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasPortName
+world-port-index:hasPortName rdf:type owl:DatatypeProperty ;
+                             rdfs:domain <https://schema.coypu.org/global#Port> ;
+                             rdfs:comment "A port name as listed in the World Port Index dataset."@en ;
+                             rdfs:label "has port name"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasTidesRange
+world-port-index:hasTidesRange rdf:type owl:DatatypeProperty ,
+                                        owl:FunctionalProperty ;
+                               rdfs:comment """The mean tides range in meters.
+The mean range is normally given for all ports outside of United States (U.S.) jurisdiction, but the mean rise is substituted if range data is not available. The distinction between range and rise can be disregarded without affecting the general utility of this publication."""@en ;
+                               rdfs:label "has tides range"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasTurningArea
+world-port-index:hasTurningArea rdf:type owl:DatatypeProperty ,
+                                         owl:FunctionalProperty ;
+                                rdfs:domain <https://schema.coypu.org/global#Port> ;
+                                rdfs:range xsd:boolean ;
+                                rdfs:comment "An indication that a turning basin or other water area for turning vessels is available in the port." ;
+                                rdfs:label "has turning area"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasWeightMaximum
+world-port-index:hasWeightMaximum rdf:type owl:DatatypeProperty ,
+                                           owl:FunctionalProperty ;
+                                  rdfs:range xsd:decimal ;
+                                  rdfs:comment "The maximum weight in tons."@en ;
+                                  rdfs:label "has maximum weight"@en .
+
+
+###  https://schema.coypu.org/world-port-index#hasWeightMinimum
+world-port-index:hasWeightMinimum rdf:type owl:DatatypeProperty ,
+                                           owl:FunctionalProperty ;
+                                  rdfs:range xsd:decimal ;
+                                  rdfs:comment "The minimum weight in tons."@en ;
+                                  rdfs:label "has minimum weight"@en .
+
+
+###  https://schema.coypu.org/world-port-index#isEtaRequired
+world-port-index:isEtaRequired rdf:type owl:DatatypeProperty ,
+                                        owl:FunctionalProperty ;
+                               rdfs:domain <https://schema.coypu.org/global#Port> ;
+                               rdfs:range xsd:boolean ;
+                               rdfs:label "is eta required"@en .
+
+
+###  https://schema.coypu.org/world-port-index#isFirstPortOfEntry
+world-port-index:isFirstPortOfEntry rdf:type owl:DatatypeProperty ,
+                                             owl:FunctionalProperty ;
+                                    rdfs:domain <https://schema.coypu.org/global#Port> ;
+                                    rdfs:range xsd:boolean ;
+                                    rdfs:comment "A port where a vessel may enter and clear foreign goods and personnel through Customs and Immigration. For vessels arriving from overseas a quarantine clearance is required by the First Port of Entry."@en ;
+                                    rdfs:label "is first port of entry"@en .
+
+
+###  https://schema.coypu.org/world-port-index#isPilotageAvailable
+world-port-index:isPilotageAvailable rdf:type owl:DatatypeProperty ,
+                                              owl:FunctionalProperty ;
+                                     rdfs:domain <https://schema.coypu.org/global#Port> ;
+                                     rdfs:label "is pilotage available"@en .
+
+
+###  https://schema.coypu.org/world-port-index#isPilotageRequired
+world-port-index:isPilotageRequired rdf:type owl:DatatypeProperty ,
+                                             owl:FunctionalProperty ;
+                                    rdfs:domain <https://schema.coypu.org/global#Port> ;
+                                    rdfs:comment "The necessity or advisability of taking a pilot is given. In some cases, pilotage may be compulsory, although pilots are not actually stationed at the port in question and must be obtained elsewhere."@en ;
+                                    rdfs:label "is pilotage required"@en .
+
+
+###  https://schema.coypu.org/world-port-index#isUSRepresentative
+world-port-index:isUSRepresentative rdf:type owl:DatatypeProperty ,
+                                             owl:FunctionalProperty ;
+                                    rdfs:domain <https://schema.coypu.org/global#Port> ;
+                                    rdfs:range xsd:boolean ;
+                                    rdfs:comment "Indicates whether the United States maintains civilian or military representation in that port."@en ;
+                                    rdfs:label "is united states representative"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://schema.coypu.org/global#Port
+<https://schema.coypu.org/global#Port> rdf:type owl:Class .
+
+
+###  https://schema.coypu.org/world-port-index#CoastalBreakwaterPort
+world-port-index:CoastalBreakwaterPort rdf:type owl:Class ;
+                                       rdfs:subClassOf world-port-index:CoastalPort ;
+                                       rdfs:comment "A coastal harbor lying behind a man-made breakwater constructed to provide shelter, or supplement inadequate shelter already provided by natural sources" ;
+                                       rdfs:label "Coastal (breakwater) port" .
+
+
+###  https://schema.coypu.org/world-port-index#CoastalNaturalPort
+world-port-index:CoastalNaturalPort rdf:type owl:Class ;
+                                    rdfs:subClassOf world-port-index:CoastalPort ,
+                                                    world-port-index:NaturalPort ;
+                                    rdfs:comment "A coastal harbor sheltered from the wind and sea by virtue of its location within a natural coastal indentation or in the protective lee of an island, cape, reef or other natural barrier" ;
+                                    rdfs:label "Coastal (natural) port" .
+
+
+###  https://schema.coypu.org/world-port-index#CoastalPort
+world-port-index:CoastalPort rdf:type owl:Class ;
+                             rdfs:subClassOf <https://schema.coypu.org/global#Port> ;
+                             rdfs:comment "A coastal harbor" ;
+                             rdfs:label "Coastal port" .
+
+
+###  https://schema.coypu.org/world-port-index#CoastalTideGatePort
+world-port-index:CoastalTideGatePort rdf:type owl:Class ;
+                                     rdfs:subClassOf world-port-index:CoastalPort ,
+                                                     world-port-index:TideGatePort ;
+                                     rdfs:comment "A coastal harbor, the waters of which are constrained by locks or other mechanical devices in order to provide sufficient water to float vessels at all stages of the tide" ;
+                                     rdfs:label "Coastal (tide gates) port" .
+
+
+###  https://schema.coypu.org/world-port-index#DepthClass
+world-port-index:DepthClass rdf:type owl:Class ;
+                            rdfs:subClassOf world-port-index:PortFeature ;
+                            rdfs:label "MaritimeDepth"@en .
+
+
+###  https://schema.coypu.org/world-port-index#DryDockSizeClass
+world-port-index:DryDockSizeClass rdf:type owl:Class ;
+                                  rdfs:subClassOf world-port-index:PortFeature ;
+                                  rdfs:label "DryDockSize"@en .
+
+
+###  https://schema.coypu.org/world-port-index#LakeOrCanalPort
+world-port-index:LakeOrCanalPort rdf:type owl:Class ;
+                                 rdfs:subClassOf <https://schema.coypu.org/global#Port> ;
+                                 rdfs:comment "A harbor located in the interior portion of a canal or lake that is connected with the sea by a navigable waterway" ;
+                                 rdfs:label "Canal or Lake port" .
+
+
+###  https://schema.coypu.org/world-port-index#MarineRailwaySizeClass
+world-port-index:MarineRailwaySizeClass rdf:type owl:Class ;
+                                        rdfs:subClassOf world-port-index:PortFeature ;
+                                        rdfs:label "MarineRailwaySize"@en .
+
+
+###  https://schema.coypu.org/world-port-index#NaturalPort
+world-port-index:NaturalPort rdf:type owl:Class ;
+                             rdfs:subClassOf <https://schema.coypu.org/global#Port> ;
+                             rdfs:label "Natural port" .
+
+
+###  https://schema.coypu.org/world-port-index#OpenRoadsteadPort
+world-port-index:OpenRoadsteadPort rdf:type owl:Class ;
+                                   rdfs:subClassOf <https://schema.coypu.org/global#Port> ;
+                                   rdfs:comment "A port which has no natural or artificial barrier to provide shelter from the wind, sea and swell" ;
+                                   rdfs:label "Open roadstead port" .
+
+
+###  https://schema.coypu.org/world-port-index#PortFeature
+world-port-index:PortFeature rdf:type owl:Class .
+
+
+###  https://schema.coypu.org/world-port-index#RepairClass
+world-port-index:RepairClass rdf:type owl:Class ;
+                             rdfs:subClassOf world-port-index:PortFeature ;
+                             rdfs:label "RepairPossibilities"@en .
+
+
+###  https://schema.coypu.org/world-port-index#RiverBasinPort
+world-port-index:RiverBasinPort rdf:type owl:Class ;
+                                rdfs:subClassOf world-port-index:RiverPort ;
+                                rdfs:comment "A river harbor in which slips for vessels have been excavated in the banks, obliquely or at right angles to the axis of the stream" ;
+                                rdfs:label "River (basins) port" .
+
+
+###  https://schema.coypu.org/world-port-index#RiverNaturalPort
+world-port-index:RiverNaturalPort rdf:type owl:Class ;
+                                  rdfs:subClassOf world-port-index:NaturalPort ,
+                                                  world-port-index:RiverPort ;
+                                  rdfs:comment "A harbor located on a river, the waters of which are not retained by any artificial means. The facilities may consist of quays or wharves parallel to the banks of the stream, or piers or jetties which extend into the stream" ;
+                                  rdfs:label "River (natural) port" .
+
+
+###  https://schema.coypu.org/world-port-index#RiverPort
+world-port-index:RiverPort rdf:type owl:Class ;
+                           rdfs:subClassOf <https://schema.coypu.org/global#Port> ;
+                           rdfs:comment "A river harbor" ;
+                           rdfs:label "River port" .
+
+
+###  https://schema.coypu.org/world-port-index#RiverTideGatePort
+world-port-index:RiverTideGatePort rdf:type owl:Class ;
+                                   rdfs:subClassOf world-port-index:RiverPort ,
+                                                   world-port-index:TideGatePort ;
+                                   rdfs:comment "A river harbor, the waters of which are constrained by locks or other mechanical devices in order to provide sufficient water to float vessels at all stages of the tide" ;
+                                   rdfs:label "River (tide gates) port" .
+
+
+###  https://schema.coypu.org/world-port-index#ShelterClass
+world-port-index:ShelterClass rdf:type owl:Class ;
+                              rdfs:subClassOf world-port-index:PortFeature ;
+                              rdfs:label "ShelterAfforded" .
+
+
+###  https://schema.coypu.org/world-port-index#SizeClass
+world-port-index:SizeClass rdf:type owl:Class ;
+                           rdfs:subClassOf world-port-index:PortFeature ;
+                           rdfs:label "HarborSize"@en .
+
+
+###  https://schema.coypu.org/world-port-index#TideGatePort
+world-port-index:TideGatePort rdf:type owl:Class ;
+                              rdfs:subClassOf <https://schema.coypu.org/global#Port> ;
+                              rdfs:comment "A harbor, the waters of which are constrained by locks or other mechanical devices in order to provide sufficient water to float vessels at all stages of the tide" ;
+                              rdfs:label "Tide gates port" .
+
+
+###  https://schema.coypu.org/world-port-index#TyphoonHarbor
+world-port-index:TyphoonHarbor rdf:type owl:Class ;
+                               rdfs:subClassOf <https://schema.coypu.org/global#Port> ;
+                               rdfs:label "Typhoon harbor" .
+
+
+###  https://schema.coypu.org/world-port-index#VesselSizeClass
+world-port-index:VesselSizeClass rdf:type owl:Class ;
+                                 rdfs:subClassOf world-port-index:PortFeature ;
+                                 rdfs:label "VesselSize"@en .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://schema.coypu.org/world-port-index#DepthClass:A
+world-port-index:DepthClass:A rdf:type owl:NamedIndividual ,
+                                       world-port-index:DepthClass ;
+                              world-port-index:isLargerThan world-port-index:DepthClass:B ;
+                              world-port-index:hasDepthMinimum 23.2 .
+
+
+###  https://schema.coypu.org/world-port-index#DepthClass:B
+world-port-index:DepthClass:B rdf:type owl:NamedIndividual ,
+                                       world-port-index:DepthClass ;
+                              world-port-index:isLargerThan world-port-index:DepthClass:C ;
+                              world-port-index:hasDepthMaximum 22.9 ;
+                              world-port-index:hasDepthMinimum 21.6 .
+
+
+###  https://schema.coypu.org/world-port-index#DepthClass:C
+world-port-index:DepthClass:C rdf:type owl:NamedIndividual ,
+                                       world-port-index:DepthClass ;
+                              world-port-index:isLargerThan world-port-index:DepthClass:D ;
+                              world-port-index:hasDepthMaximum 21.3 ;
+                              world-port-index:hasDepthMinimum 20.1 .
+
+
+###  https://schema.coypu.org/world-port-index#DepthClass:D
+world-port-index:DepthClass:D rdf:type owl:NamedIndividual ,
+                                       world-port-index:DepthClass ;
+                              world-port-index:isLargerThan world-port-index:DepthClass:E ;
+                              world-port-index:hasDepthMaximum 19.8 ;
+                              world-port-index:hasDepthMinimum 18.6 .
+
+
+###  https://schema.coypu.org/world-port-index#DepthClass:E
+world-port-index:DepthClass:E rdf:type owl:NamedIndividual ,
+                                       world-port-index:DepthClass ;
+                              world-port-index:isLargerThan world-port-index:DepthClass:F ;
+                              world-port-index:hasDepthMaximum 18.2 ;
+                              world-port-index:hasDepthMinimum 17.1 .
+
+
+###  https://schema.coypu.org/world-port-index#DepthClass:F
+world-port-index:DepthClass:F rdf:type owl:NamedIndividual ,
+                                       world-port-index:DepthClass ;
+                              world-port-index:isLargerThan world-port-index:DepthClass:G ;
+                              world-port-index:hasDepthMaximum 16.8 ;
+                              world-port-index:hasDepthMinimum 15.5 .
+
+
+###  https://schema.coypu.org/world-port-index#DepthClass:G
+world-port-index:DepthClass:G rdf:type owl:NamedIndividual ,
+                                       world-port-index:DepthClass ;
+                              world-port-index:isLargerThan world-port-index:DepthClass:H ;
+                              world-port-index:hasDepthMaximum 15.2 ;
+                              world-port-index:hasDepthMinimum 14.0 .
+
+
+###  https://schema.coypu.org/world-port-index#DepthClass:H
+world-port-index:DepthClass:H rdf:type owl:NamedIndividual ,
+                                       world-port-index:DepthClass ;
+                              world-port-index:isLargerThan world-port-index:DepthClass:J ;
+                              world-port-index:hasDepthMaximum 13.7 ;
+                              world-port-index:hasDepthMinimum 12.5 .
+
+
+###  https://schema.coypu.org/world-port-index#DepthClass:J
+world-port-index:DepthClass:J rdf:type owl:NamedIndividual ,
+                                       world-port-index:DepthClass ;
+                              world-port-index:isLargerThan world-port-index:DepthClass:K ;
+                              world-port-index:hasDepthMaximum 12.2 ;
+                              world-port-index:hasDepthMinimum 11.0 .
+
+
+###  https://schema.coypu.org/world-port-index#DepthClass:K
+world-port-index:DepthClass:K rdf:type owl:NamedIndividual ,
+                                       world-port-index:DepthClass ;
+                              world-port-index:isLargerThan world-port-index:DepthClass:L ;
+                              world-port-index:hasDepthMaximum 10.7 ;
+                              world-port-index:hasDepthMinimum 9.4 .
+
+
+###  https://schema.coypu.org/world-port-index#DepthClass:L
+world-port-index:DepthClass:L rdf:type owl:NamedIndividual ,
+                                       world-port-index:DepthClass ;
+                              world-port-index:isLargerThan world-port-index:DepthClass:M ;
+                              world-port-index:hasDepthMaximum 9.1 ;
+                              world-port-index:hasDepthMinimum 7.9 .
+
+
+###  https://schema.coypu.org/world-port-index#DepthClass:M
+world-port-index:DepthClass:M rdf:type owl:NamedIndividual ,
+                                       world-port-index:DepthClass ;
+                              world-port-index:isLargerThan world-port-index:DepthClass:N ;
+                              world-port-index:hasDepthMaximum 7.6 ;
+                              world-port-index:hasDepthMinimum 6.4 .
+
+
+###  https://schema.coypu.org/world-port-index#DepthClass:N
+world-port-index:DepthClass:N rdf:type owl:NamedIndividual ,
+                                       world-port-index:DepthClass ;
+                              world-port-index:isLargerThan world-port-index:DepthClass:O ;
+                              world-port-index:hasDepthMaximum 6.1 ;
+                              world-port-index:hasDepthMinimum 4.9 .
+
+
+###  https://schema.coypu.org/world-port-index#DepthClass:O
+world-port-index:DepthClass:O rdf:type owl:NamedIndividual ,
+                                       world-port-index:DepthClass ;
+                              world-port-index:isLargerThan world-port-index:DepthClass:P ;
+                              world-port-index:hasDepthMaximum 4.6 ;
+                              world-port-index:hasDepthMinimum 3.4 .
+
+
+###  https://schema.coypu.org/world-port-index#DepthClass:P
+world-port-index:DepthClass:P rdf:type owl:NamedIndividual ,
+                                       world-port-index:DepthClass ;
+                              world-port-index:isLargerThan world-port-index:DepthClass:Q ;
+                              world-port-index:hasDepthMaximum 3.0 ;
+                              world-port-index:hasDepthMinimum 1.8 .
+
+
+###  https://schema.coypu.org/world-port-index#DepthClass:Q
+world-port-index:DepthClass:Q rdf:type owl:NamedIndividual ,
+                                       world-port-index:DepthClass ;
+                              world-port-index:hasDepthMaximum 1.5 ;
+                              world-port-index:hasDepthMinimum 0 .
+
+
+###  https://schema.coypu.org/world-port-index#DryDockSizeClass:L
+world-port-index:DryDockSizeClass:L rdf:type owl:NamedIndividual ,
+                                             world-port-index:DryDockSizeClass ;
+                                    world-port-index:isLargerThan world-port-index:DryDockSizeClass:M ;
+                                    world-port-index:hasLengthMinimum 301 ;
+                                    rdfs:label "large dry-dock" .
+
+
+###  https://schema.coypu.org/world-port-index#DryDockSizeClass:M
+world-port-index:DryDockSizeClass:M rdf:type owl:NamedIndividual ,
+                                             world-port-index:DryDockSizeClass ;
+                                    world-port-index:isLargerThan world-port-index:DryDockSizeClass:S ;
+                                    world-port-index:hasLengthMaximum 300 ;
+                                    world-port-index:hasLengthMinimum 201 ;
+                                    rdfs:label "medium dry-dock" .
+
+
+###  https://schema.coypu.org/world-port-index#DryDockSizeClass:S
+world-port-index:DryDockSizeClass:S rdf:type owl:NamedIndividual ,
+                                             world-port-index:DryDockSizeClass ;
+                                    world-port-index:hasLengthMaximum 200 ;
+                                    rdfs:label "small dry-dock" .
+
+
+###  https://schema.coypu.org/world-port-index#MarineRailwaySizeClass:L
+world-port-index:MarineRailwaySizeClass:L rdf:type owl:NamedIndividual ,
+                                                   world-port-index:MarineRailwaySizeClass ;
+                                          world-port-index:isLargerThan world-port-index:MarineRailwaySizeClass:M ;
+                                          world-port-index:hasWeightMinimum 1000 ;
+                                          rdfs:label "large marine railway" .
+
+
+###  https://schema.coypu.org/world-port-index#MarineRailwaySizeClass:M
+world-port-index:MarineRailwaySizeClass:M rdf:type owl:NamedIndividual ,
+                                                   world-port-index:MarineRailwaySizeClass ;
+                                          world-port-index:isLargerThan world-port-index:MarineRailwaySizeClass:S ;
+                                          world-port-index:hasWeightMaximum 1000 ;
+                                          world-port-index:hasWeightMinimum 201 ;
+                                          rdfs:label "medium marine railway" .
+
+
+###  https://schema.coypu.org/world-port-index#MarineRailwaySizeClass:S
+world-port-index:MarineRailwaySizeClass:S rdf:type owl:NamedIndividual ,
+                                                   world-port-index:MarineRailwaySizeClass ;
+                                          world-port-index:hasWeightMaximum 200 ;
+                                          rdfs:label "small marine railway" .
+
+
+###  https://schema.coypu.org/world-port-index#RepairClass:A
+world-port-index:RepairClass:A rdf:type owl:NamedIndividual ,
+                                        world-port-index:RepairClass ;
+                               world-port-index:isBetterThan world-port-index:RepairClass:B ;
+                               rdfs:comment "Extensive overhauling and rebuilding in well equipped shipyards" ;
+                               rdfs:label "major repairs" .
+
+
+###  https://schema.coypu.org/world-port-index#RepairClass:B
+world-port-index:RepairClass:B rdf:type owl:NamedIndividual ,
+                                        world-port-index:RepairClass ;
+                               world-port-index:isBetterThan world-port-index:RepairClass:C ;
+                               rdfs:comment "Extensive overhauling and rebuilding that does not require drydocking. Suitable dry-docking facilities are usually lacking or inadequate" ;
+                               rdfs:label "moderate repairs" .
+
+
+###  https://schema.coypu.org/world-port-index#RepairClass:C
+world-port-index:RepairClass:C rdf:type owl:NamedIndividual ,
+                                        world-port-index:RepairClass ;
+                               world-port-index:isBetterThan world-port-index:RepairClass:D ;
+                               rdfs:comment "Small repair work in independent machine shops or foundries" ;
+                               rdfs:label "limited repairs" .
+
+
+###  https://schema.coypu.org/world-port-index#RepairClass:D
+world-port-index:RepairClass:D rdf:type owl:NamedIndividual ,
+                                        world-port-index:RepairClass ;
+                               world-port-index:isBetterThan world-port-index:RepairClass:N ;
+                               rdfs:comment "Emergency only" ;
+                               rdfs:label "emergency repairs" .
+
+
+###  https://schema.coypu.org/world-port-index#RepairClass:N
+world-port-index:RepairClass:N rdf:type owl:NamedIndividual ,
+                                        world-port-index:RepairClass ;
+                               rdfs:comment "None" ;
+                               rdfs:label "no repairs possible" .
+
+
+###  https://schema.coypu.org/world-port-index#ShelterClass:E
+world-port-index:ShelterClass:E rdf:type owl:NamedIndividual ,
+                                         world-port-index:ShelterClass ;
+                                world-port-index:isBetterThan world-port-index:ShelterClass:G ;
+                                rdfs:label "excellent shelter" .
+
+
+###  https://schema.coypu.org/world-port-index#ShelterClass:F
+world-port-index:ShelterClass:F rdf:type owl:NamedIndividual ,
+                                         world-port-index:ShelterClass ;
+                                world-port-index:isBetterThan world-port-index:ShelterClass:P ;
+                                rdfs:label "fair shelter" .
+
+
+###  https://schema.coypu.org/world-port-index#ShelterClass:G
+world-port-index:ShelterClass:G rdf:type owl:NamedIndividual ,
+                                         world-port-index:ShelterClass ;
+                                world-port-index:isBetterThan world-port-index:ShelterClass:F ;
+                                rdfs:label "good shelter" .
+
+
+###  https://schema.coypu.org/world-port-index#ShelterClass:N
+world-port-index:ShelterClass:N rdf:type owl:NamedIndividual ,
+                                         world-port-index:ShelterClass ;
+                                rdfs:comment "None" ;
+                                rdfs:label "no shelter" .
+
+
+###  https://schema.coypu.org/world-port-index#ShelterClass:P
+world-port-index:ShelterClass:P rdf:type owl:NamedIndividual ,
+                                         world-port-index:ShelterClass ;
+                                world-port-index:isBetterThan world-port-index:ShelterClass:N ;
+                                rdfs:label "poor shelter" .
+
+
+###  https://schema.coypu.org/world-port-index#SizeClass:L
+world-port-index:SizeClass:L rdf:type owl:NamedIndividual ,
+                                      world-port-index:SizeClass ;
+                             world-port-index:isLargerThan world-port-index:SizeClass:M ;
+                             rdfs:comment "large harbor size" ;
+                             rdfs:label "large" .
+
+
+###  https://schema.coypu.org/world-port-index#SizeClass:M
+world-port-index:SizeClass:M rdf:type owl:NamedIndividual ,
+                                      world-port-index:SizeClass ;
+                             world-port-index:isLargerThan world-port-index:SizeClass:S ;
+                             rdfs:comment "medium harbor size" ;
+                             rdfs:label "medium" .
+
+
+###  https://schema.coypu.org/world-port-index#SizeClass:S
+world-port-index:SizeClass:S rdf:type owl:NamedIndividual ,
+                                      world-port-index:SizeClass ;
+                             world-port-index:isLargerThan world-port-index:SizeClass:V ;
+                             rdfs:comment "small harbor size" ;
+                             rdfs:label "small" .
+
+
+###  https://schema.coypu.org/world-port-index#SizeClass:V
+world-port-index:SizeClass:V rdf:type owl:NamedIndividual ,
+                                      world-port-index:SizeClass ;
+                             rdfs:comment "very small harbor size" ;
+                             rdfs:label "very small" .
+
+
+###  https://schema.coypu.org/world-port-index#VesselSizeClass:L
+world-port-index:VesselSizeClass:L rdf:type owl:NamedIndividual ,
+                                            world-port-index:VesselSizeClass ;
+                                   world-port-index:isLargerThan world-port-index:VesselSizeClass:M ;
+                                   world-port-index:hasLengthMinimum 152.4 .
+
+
+###  https://schema.coypu.org/world-port-index#VesselSizeClass:M
+world-port-index:VesselSizeClass:M rdf:type owl:NamedIndividual ,
+                                            world-port-index:VesselSizeClass ;
+                                   world-port-index:hasLengthMaximum 152.4 .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
